@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Search for Universities</h2>
+<form method="get" action="{% url 'search' %}">
+    <label for="country">Country:</label>
+    <input type="text" id="country" name="country" placeholder="Enter country" required>
+    <button type="submit">Search</button>
+</form>
+{% endblock %}

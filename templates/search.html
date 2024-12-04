@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Universities in {{ country }}</h2>
+<form method="get" action="{% url 'search' %}">
+    <label for="country">Country:</label>
+    <input type="text" id="country" name="country" placeholder="Enter country" value="{{ country }}" required>
+    
+    {% if provinces %}
+    <select id="province" name="province">
+        <option value="">All Provinces</option>
+        {% for prov in provinces %}
+        <option value="{{ prov }}" {% if prov == province %}selected{% endif %}>{{ prov }}</option>
+        {% endfor %}
+    </select>
+    {% endif %}
+    
+    <button type="submit">Search</button>
+</form>
+
+{% if universities %}
+    <div class="cards">
+        {% for uni in universities %}
+            <div class="card" id="card-{{ forloop.counter }}">
+                <h3>{{ uni.name }}</h3>
+                {% if uni.web_pages %}
+                <p><a href="{{ uni.web_pages.0 }}" target="_blank">{{ uni.web_pages.0 }}</a></p>
+                {% else %}
+                <p>No website available</p>
+                {% endif %}
+                <button onclick="downloadCard('card-{{ forloop.counter }}')">Download</button>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No universities found.</p>
+{% endif %}
+{% endblock %}
